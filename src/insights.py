@@ -92,41 +92,38 @@ def get_min_salary(path):
 
 
 def matches_salary_range(job, salary):
-    if (
-        ("max_salary" or "min_salary") not in job
-        or (type(job["max_salary"] or job["min_salary"] or salary) != int)
-        or (job["min_salary"] > job["max_salary"])
-    ):
-        raise ValueError('Error')
-    return (job["min_salary"] <= salary and salary <= job["max_salary"])
 
-    
-    """Checks if a given salary is in the salary range of a given job
+    # tentei fazer dessa forma, mas atrapalhou para o proximo requisito, 
+    # então destrinchei
+    # if (
+    #     ("max_salary" or "min_salary") not in job
+    #     or (type(job["max_salary"] or job["min_salary"] or salary) != int)
+    #     or (job["min_salary"] > job["max_salary"])
+    # ):
+    #     raise ValueError("Error")
+    # return int(job["min_salary"]) <= salary <= int(job["max_salary"])
 
-    Parameters
-    ----------
-    job : dict
-        The job with `min_salary` and `max_salary` keys
-    salary : int
-        The salary to check if matches with salary range of the job
-
-    Returns
-    -------
-    bool
-        True if the salary is in the salary range of the job, False otherwise
-
-    Raises
-    ------
-    ValueError
-        If `job["min_salary"]` or `job["max_salary"]` doesn't exists
-        If `job["min_salary"]` or `job["max_salary"]` aren't valid integers
-        If `job["min_salary"]` is greather than `job["max_salary"]`
-        If `salary` isn't a valid integer
-    """
-    pass
+    if ("max_salary" or "min_salary") not in job:
+        raise ValueError("Error")
+    if type(job["max_salary"] or job["min_salary"]) != int:
+        raise ValueError("Error")
+    if type(salary) != int:
+        raise ValueError("Error")
+    if job["min_salary"] > job["max_salary"]:
+        raise ValueError("Error")
+    return int(job["min_salary"]) <= salary <= int(job["max_salary"])
 
 
 def filter_by_salary_range(jobs, salary):
+    filteredJobs = []
+    for job in jobs:
+        try:
+            if matches_salary_range(job, salary):
+                filteredJobs.append(job)
+        except ValueError:
+            print("Oops!  That was no valid number.  Try again...")
+    return filteredJobs
+
     """Filters a list of jobs by salary range
 
     Parameters
