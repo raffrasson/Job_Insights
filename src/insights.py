@@ -17,8 +17,9 @@ def get_unique_job_types(path):
 
     jobs = read(path)
     uniqueJobTypes = []
-    for type in jobs:
-        if type not in uniqueJobTypes:
+    for column in jobs:
+        jobTypes = column["job_types"]
+        if jobTypes not in uniqueJobTypes:
             uniqueJobTypes.append(type)
     return uniqueJobTypes
 
