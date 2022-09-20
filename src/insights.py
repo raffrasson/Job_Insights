@@ -31,9 +31,9 @@ def filter_by_job_type(jobs, job_type):
 def get_unique_industries(path):
     jobs = read(path)
     uniqueIndustries = []
-    for type in jobs:
-        if type["industry"] not in uniqueIndustries:
-            uniqueIndustries.append(type["industry"])
+    for industry in jobs:
+        if industry["industry"] not in uniqueIndustries and industry["industry"] != "":
+            uniqueIndustries.append(industry["industry"])
     return uniqueIndustries
 
 
